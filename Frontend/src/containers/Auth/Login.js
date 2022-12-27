@@ -22,12 +22,32 @@ class Login extends Component {
     initialState = {
         username: '',
         password: '',
-        loginError: ''
+        loginError: '',
+        isShowPwd: false,
     }
 
     state = {
         ...this.initialState
     };
+
+    ChangeUserName = (e) => {
+      this.setState({
+        username : e.target.value,
+      });
+    }
+    ChangPassword = (e) => {
+      this.setState({
+        password : e.target.value,
+      });
+    }
+    handleLogin = () =>{
+      alert(this.state.username + " " + this.state.password);
+    }
+    handleShowHidePassword = ()=>{
+      this.setState({
+        isShowPwd : !this.state.isShowPwd,
+      });
+    }
     render() {
         const { username, password, loginError } = this.state;
         const { lang } = this.props;
@@ -35,32 +55,34 @@ class Login extends Component {
         return (
             <div className="login-wrapper container-fluid">
                 <div className="login-container row">
-                    <div classname="form_login">
+                    <div className="form_login">
                         
-                        <h1 classname="text-center">Login</h1>
-                        <div classname="col-12">
+                        <h1 className="login-header">Login</h1>
+                        <div className="col-12">
                           <div className="mb-3">
                             <label className="form-label">Email</label>
-                            <input type="email" className="form-control" placeholder="Enter your email" />
+                            <input type="email" value={this.state.username} onChange={(event) => this.ChangeUserName(event)} className="form-control" placeholder="Enter your email" />
                           </div>
                         </div>
-                        <div classname="col-12">
+                        <div className="col-12 password-field">
                           <div className="mb-3">
                             <label className="form-label">Password  </label>
-                            <input type="password" className="form-control" placeholder="Enter your password" />
+                            <input type={this.state.isShowPwd ? "text":"password"} value={this.state.password} onChange={(event) => this.ChangPassword(event)} className="form-control" placeholder="Enter your password" />
                           </div>
+                          <span onClick={()=>this.handleShowHidePassword()}><i class={this.state.isShowPwd?"fa-solid fa-eye-slash":"fa-solid fa-eye"}></i></span>
                         </div>
                         <div classname="col-12">
                           <div className="mb-3">
-                            <input type="submit" className="form-control" placeholder="Enter your password" />
+                            <input type="submit" onClick={()=> this.handleLogin()} className="form-control submit-form" placeholder="Enter your password" />
                           </div>
                         </div>
-                        <div classname="col-12">
+                        <div className="col-12">
                           <p>Forgot your password?</p>
                         </div>
-                        <div className="col-12">
-                          <i className="fa-brands fa-facebook" />
-                          <i className="fa-brands fa-google-plus-g" />
+                        <div className="or-login">Or Login:</div>
+                        <div className="link-social col-12">
+                          <a href="#"><i className="fa-brands fa-facebook link-fb" /></a>
+                          <a href="#"><i className="fa-brands fa-google-plus-g link-gg" /></a>
                         </div>
                       </div>
                       
